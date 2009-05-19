@@ -1,0 +1,65 @@
+// iejoystick.idl : IDL source for iejoystick
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (iejoystick.tlb) and marshalling code.
+
+#include "olectl.h"
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(DB2C9EE4-54EB-4891-A9C4-3E5F89483EF3),
+	dual,
+	nonextensible,
+	helpstring("IJoystickCtl Interface"),
+	pointer_default(unique)
+]
+interface IJoystickCtl : IDispatch {
+	[id(1),  helpstring("method setDevice")] HRESULT setDevice([in] UINT device, [out, retval] VARIANT_BOOL *pVal);
+	[id(2),  helpstring("method getDevice")] HRESULT getDevice([out, retval] UINT *pVal);
+	[id(3),  helpstring("method isConnected")] HRESULT isConnected([out, retval] VARIANT_BOOL *pVal);
+	[id(4),  helpstring("setAutoPoll method")] HRESULT setAutoPoll([in] VARIANT_BOOL autoPoll);
+	[id(5),  helpstring("method poll")] HRESULT poll();
+	[id(6),  helpstring("method hasZAxis")] HRESULT hasZAxis([out, retval] VARIANT_BOOL *pVal);
+	[id(7),  helpstring("method hasRAxis")] HRESULT hasRAxis([out, retval] VARIANT_BOOL *pVal);
+	[id(8),  helpstring("method hasPOV")] HRESULT hasPOV([out, retval] VARIANT_BOOL *pVal);
+	[id(9),  helpstring("method getNumButtons")] HRESULT getNumButtons([out, retval] UINT *pVal);
+	[id(10), helpstring("method setButtonA")] HRESULT setButtonA([in] UINT button);
+	[id(11), helpstring("method setButtonB")] HRESULT setButtonB([in] UINT button);
+	[id(12), helpstring("method calibrate")] HRESULT calibrate();
+	[id(13), helpstring("method getProductName")] HRESULT getProductName([out, retval] BSTR *pName);
+	
+	[propget, id(14), helpstring("property x")] HRESULT x([out, retval] DWORD *pVal);
+	[propget, id(15), helpstring("property y")] HRESULT y([out, retval] DWORD *pVal);
+	[propget, id(16), helpstring("z axis property")] HRESULT z([out, retval] DWORD *pVal);
+	[propget, id(17), helpstring("r axis property")] HRESULT r([out, retval] DWORD *pVal);
+	[propget, id(18), helpstring("property a")] HRESULT a([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(19), helpstring("property b")] HRESULT b([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(20), helpstring("property buttons")] HRESULT buttons([out, retval] DWORD *pVal);
+	[propget, id(21), helpstring("property pov")] HRESULT pov([out, retval] DWORD *pVal);
+	[propget, id(22), helpstring("property up")] HRESULT up([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(23), helpstring("property down")] HRESULT down([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(24), helpstring("property left")] HRESULT left([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(25), helpstring("property right")] HRESULT right([out, retval] VARIANT_BOOL *pVal);
+};
+
+[
+	uuid(80B22F7E-811F-49C9-B0C6-E3E1D63E70A2),
+	version(1.0),
+	helpstring("iejoystick 1.0 Type Library")
+]
+library iejoystickLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(3AE9ED90-4B59-47A0-873B-7B71554B3C3E),
+		control,
+		helpstring("JoystickCtl Class")
+	]
+	coclass JoystickCtl
+	{
+		[default] interface IJoystickCtl;
+	};
+};
