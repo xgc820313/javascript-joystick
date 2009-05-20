@@ -342,11 +342,6 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\JoystickCtl.htm"
-			DeploymentContent="true"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
