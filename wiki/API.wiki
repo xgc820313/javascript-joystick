@@ -1,0 +1,22 @@
+#summary JavaScript API
+#labels Featured,Phase-Implementation
+
+= JavaScript API =
+
+The plug-in currently works with Firefox, IE, Opera and Safari on Windows, and Safari on OS X. The API is the same across all browsers.
+
+== Methods ==
+||boolean||`setDevice(int index)`<br>Select the game device the plug-in instance is connected to; returns `true` if a controller is connected.||
+||int    ||`getDevice()`<br>Returns the index of the game device currently set.||
+||boolean||`isConnected()`<br>Returns `true` if a controller is connected.||
+
+== Properties ==
+||int    ||x<br>Joystick x-axis.||
+||int    ||y<br>Joystick y-axis.||
+||int    ||z<br>Throttle (or z-axis).||
+||int    ||r<br>Rudder (or r-axis).||
+||boolean||a<br>`true` if the A button is pressed (the A button can be reassigned to any of the controller's buttons)||
+||boolean||b<br>`true` if the B button is pressed (the B button can be reassigned to any of the controller's buttons)||
+
+== Embedding ==
+For IE (or other ActiveX containers) the class ID is `3AE9ED90-4B59-47A0-873B-7B71554B3C3E`. For all other browsers the MIME-type is `application/x-vnd.numfum-joystick`. Sample code to follow.
