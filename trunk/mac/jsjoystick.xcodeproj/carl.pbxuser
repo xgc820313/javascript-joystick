@@ -72,10 +72,11 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 264980615;
-			PBXWorkspaceStateSaveDate = 264980615;
+			PBXPerProjectTemplateStateSaveDate = 264980862;
+			PBXWorkspaceStateSaveDate = 264980862;
 		};
 		perUserProjectItems = {
+			C346702A0FCB498A00E4989C /* PBXTextBookmark */ = C346702A0FCB498A00E4989C /* PBXTextBookmark */;
 			C346FA690F88F0C2002DE23A /* PlistBookmark */ = C346FA690F88F0C2002DE23A /* PlistBookmark */;
 			C346FA6A0F88F0C2002DE23A /* PBXTextBookmark */ = C346FA6A0F88F0C2002DE23A /* PBXTextBookmark */;
 			C346FA6B0F88F0C2002DE23A /* PBXTextBookmark */ = C346FA6B0F88F0C2002DE23A /* PBXTextBookmark */;
@@ -106,7 +107,6 @@
 			C3A2392B0FCB4516001BE9FD /* PBXTextBookmark */ = C3A2392B0FCB4516001BE9FD /* PBXTextBookmark */;
 			C3A2392C0FCB4516001BE9FD /* PBXTextBookmark */ = C3A2392C0FCB4516001BE9FD /* PBXTextBookmark */;
 			C3A2392D0FCB4516001BE9FD /* PBXTextBookmark */ = C3A2392D0FCB4516001BE9FD /* PBXTextBookmark */;
-			C3A239330FCB4516001BE9FD /* PBXTextBookmark */ = C3A239330FCB4516001BE9FD /* PBXTextBookmark */;
 			C3A711710F9B99EE00BABAF7 /* PBXTextBookmark */ = C3A711710F9B99EE00BABAF7 /* PBXTextBookmark */;
 			C3A711760F9B99EE00BABAF7 /* PBXTextBookmark */ = C3A711760F9B99EE00BABAF7 /* PBXTextBookmark */;
 			C3B2F0600FCB3DA50041E247 /* PBXTextBookmark */ = C3B2F0600FCB3DA50041E247 /* PBXTextBookmark */;
@@ -150,6 +150,16 @@
 			sepNavVisRange = "{0, 91}";
 			sepNavWindowFrame = "{{107, 231}, {750, 558}}";
 		};
+	};
+	C346702A0FCB498A00E4989C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C57AFE90428111CA0C5A /* JoystickPlugin.h */;
+		name = "JoystickPlugin.h: 1";
+		rLen = 0;
+		rLoc = 23;
+		rType = 0;
+		vrLen = 261;
+		vrLoc = 0;
 	};
 	C346FA540F88BEB0002DE23A /* Source Control */ = {
 		isa = PBXSourceControlManager;
@@ -634,16 +644,6 @@
 		rLoc = 2330;
 		rType = 0;
 		vrLen = 701;
-		vrLoc = 0;
-	};
-	C3A239330FCB4516001BE9FD /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 0259C57AFE90428111CA0C5A /* JoystickPlugin.h */;
-		name = "JoystickPlugin.h: 1";
-		rLen = 0;
-		rLoc = 23;
-		rType = 0;
-		vrLen = 261;
 		vrLoc = 0;
 	};
 	C3A711710F9B99EE00BABAF7 /* PBXTextBookmark */ = {
