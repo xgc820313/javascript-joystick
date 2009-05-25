@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Plug-in Test</title></head>
+<body onload="loop()">
+
+<center><h1>Joystick Plug-in</h1></center>
+<p>Note: when running the page as a local file, IE classes the ActiveX as unsafe. This works without warning when the page is on-line.</p>
+<center><textarea id="debug" cols="40" rows="20"></textarea></center>
+
+<script type="text/javascript">
+
+function createGameController() {
+	var ctrlIE = document.createElement("object");
+	if (ctrlIE) {
+		try {
+			ctrlIE.classid = "CLSID:3AE9ED90-4B59-47A0-873B-7B71554B3C3E";
+			ctrlIE.setDevice(0);
+			return ctrlIE;
+		} catch (e) {}
+	}
+	
+	var ctrlFF = document.createElement("embed");
+	if (ctrlFF) {
+		try {
+			ctrlFF.type = "application/x-vnd.numfum-joystick";
+			ctrlFF.width  = 0;
+			ctrlFF.height = 0;
+			/*
+			 * Before accessing the plug-in's script interface it needs to be
+			 * added to the page. If the 'setDevice' call fails, the plug-in
+			 * is assumed to either not be installed or not working in this
+			 * browser, in which case it is removed in the catch.
+			 */
+			document.body.appendChild(ctrlFF, document.body);
+			ctrlFF.setDevice(0);
+			return ctrlFF;
+		} catch (e) {
+			document.body.removeChild(ctrlFF);
+		}
+	}
+	
+	return null;
+}
+
+var stick = null;
+
+function loop() {
+	if (stick == null) {
+		stick = createGameController();
+	}
+	if (stick && stick.isConnected()) {
+		dprint("x: " + stick.x + "\n"
+			 + "y: " + stick.y + "\n"
+			 + "z: " + stick.z + "\n"
+			 + "r: " + stick.r + "\n"
+			 + "a: " + stick.a + "\n"
+			 + "b: " + stick.b + "\n"
+			 + "buttons: " + stick.buttons + "\n"
+			 + "pov: " + stick.pov + "\n"
+			 
+			 + "getNumButtons(): " + stick.getNumButtons() + "\n"
+			 + "getProductName(): " + stick.getProductName() + "\n"
+		);
+	} else {
+		dprint("None connected");
+	}
+	setTimeout("loop()", 100);
+}
+
+function dprint(str) {
+	var out = document.getElementById("debug");
+	if (out) {
+		out.value = str;
+	}
+}
+
+</script>
+
+</body>
+</html>
