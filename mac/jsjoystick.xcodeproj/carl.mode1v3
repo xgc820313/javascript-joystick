@@ -329,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C3ED65060FCB489B00316B68</string>
+										<string>C346702A0FCB498A00E4989C</string>
 										<key>history</key>
 										<array>
 											<string>C346FAFA0F88FACF002DE23A</string>
@@ -353,7 +353,7 @@
 											<string>C3A2392B0FCB4516001BE9FD</string>
 											<string>C3A2392C0FCB4516001BE9FD</string>
 											<string>C3A2392D0FCB4516001BE9FD</string>
-											<string>C3A239330FCB4516001BE9FD</string>
+											<string>C3ED65060FCB489B00316B68</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -429,9 +429,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>C3ED64FC0FCB489200316B68</string>
+				<string>C34670270FCB498A00E4989C</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>C3ED64FD0FCB489200316B68</string>
+				<string>C34670280FCB498A00E4989C</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -565,10 +565,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>C346FA790F88F0C2002DE23A</string>
-		<string>/Users/carl/Documents/Joystick/jsjoystick.xcodeproj</string>
+		<string>/Users/carl/Documents/JSJS/jsjoystick.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>-20 58 1440 819 0 0 1440 878 </string>
@@ -648,7 +646,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>C346FA790F88F0C2002DE23A</string>
-				<string>C3ED64FE0FCB489200316B68</string>
+				<string>C34670290FCB498A00E4989C</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
