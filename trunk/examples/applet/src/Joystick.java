@@ -8,70 +8,106 @@ import netscape.javascript.JSObject;
  */
 public class Joystick implements Controller {
 	/**
-	 * The JavaScript object that wraps around the joystick 'plug-in'.
+	 * The JavaScript object that wraps around the joystick plug-in.
 	 */
-	JSObject player = null;
+	private final JSObject plugin;
 	
 	/**
 	 *	Creates a joystick instance in the applet's containing page.
 	 *
 	 *	@param applet the calling applet
 	 */
-	public Joystick(Applet applet) {
-		player = createPluginInstance(applet);
+	public Joystick(JSObject plugin) {
+		this.plugin = plugin;
+		System.out.println(isConnected());
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#isConnected()
+	 */
+	public boolean isConnected() {
+		try {
+			return ((Boolean) plugin.call("isConnected", null)).booleanValue();
+		} catch (JSException e) {
+			return false;
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#poll()
+	 */
 	public void poll() {
 		try {
-			player.call("poll", null);
-		} catch (Exception e) {}
+			plugin.call("poll", null);
+		} catch (JSException e) {}
 	}
 	
-	/**
-	 *	Reads the joystick's x axis.
-	 *
-	 *	@return a value between 0 and 65535.
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getX()
 	 */
 	public int getX() {
-		int x = CENTRE;
 		try {
-			x = ((Number) player.getMember("x")).intValue();
-		} catch (Exception e) {}
-		return 	x;
+			return ((Number) plugin.getMember("x")).intValue();
+		} catch (JSException e) {
+			return CENTRE;
+		}
 	}
 	
-	/**
-	 *	Reads the joystick's y axis.
-	 *
-	 *	@return a value between 0 and 65535.
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getY()
 	 */
 	public int getY() {
-		int y = CENTRE;
 		try {
-			y = ((Number) player.getMember("y")).intValue();
-		} catch (Exception e) {}
-		return 	y;
+			return ((Number) plugin.getMember("y")).intValue();
+		} catch (JSException e) {
+			return CENTRE;
+		}
+	}
+	
+	public int getZ() {
+		try {
+			return ((Number) plugin.getMember("z")).intValue();
+		} catch (JSException e) {
+			return CENTRE;
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getButtons()
+	 */
+	public int getButtons() {
+		try {
+			return ((Number) plugin.getMember("buttons")).intValue();
+		} catch (JSException e) {
+			return 0;
+		}
 	}
 	
 	/**
-	 *	Reads the state of all the joystick's buttons.
-	 *
-	 *	@return the buttons represented as bits in an integer
+	 * Creates an instance of the {@code Joystick} class, dynamically
+	 * inserting the relevant browser plug-in into the document containing
+	 * {@code applet}.
+	 * 
+	 * @param applet applet instance
+	 * @return an instance of {@code Joystick} (or {@code null} if no plug-in counterpart can be created)
 	 */
-	public int getButtons() {
-		int buttons = 0;
-		try {
-			buttons = ((Number) player.getMember("buttons")).intValue();
-		} catch (Exception e) {}
-		return buttons;
-	}
-	
-	public static JSObject createPluginInstance(Applet applet) {
+	public static Joystick createJoystickInstance(Applet applet) {
 		JSObject win = null;
 		try {
 			win = (JSObject) JSObject.getWindow(applet);
-		} catch (JSException e) {}
-		return createPluginInstance(win);
+		} catch (JSException e) {
+			return null;
+		}
+		JSObject plugin = createPluginInstance(win);
+		if (plugin != null) {
+			return new Joystick(plugin);
+		}
+		return null;
 	}
 	
 	/**

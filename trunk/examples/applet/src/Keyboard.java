@@ -1,10 +1,11 @@
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
- *	Example keyboard class as a fallback for when no joystick is connected.
+ * Example keyboard class as a fallback for when no joystick is connected.
  *
- *	@param applet the calling applet
+ * @param applet the calling applet
  */
 public class Keyboard implements Controller, KeyListener {
 	private boolean up = false;
@@ -16,16 +17,26 @@ public class Keyboard implements Controller, KeyListener {
 		container.addKeyListener(this);
 	}
 	
-	public void poll() {}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	public void keyPressed(KeyEvent e) {
 		this.check(e.getKeyCode(), true);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	public void keyReleased(KeyEvent e) {
 		this.check(e.getKeyCode(), false);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	public void keyTyped(KeyEvent e) {}
 	
 	private void check(int keyCode, boolean status) {
@@ -44,35 +55,65 @@ public class Keyboard implements Controller, KeyListener {
 			break;
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#isConnected()
+	 */
+	public boolean isConnected() {
+		return true;
+	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#poll()
+	 */
+	public void poll() {}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getX()
+	 */
 	public int getX() {
-		int x = CENTRE;
-		
 		if (this.left) {
-			x = 0;
+			return 0;
 		} else {
 			if (this.right) {
-				x = 65535;
+				return 65535;
+			} else {
+				return CENTRE;
 			}
 		}
-		
-		return 	x;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getY()
+	 */
 	public int getY() {
-		int y = CENTRE;
-		
 		if (this.up) {
-			y = 0;
+			return 0;
 		} else {
 			if (this.down) {
-				y = 65535;
+				return 65535;
+			} else {
+				return CENTRE;
 			}
 		}
-		
-		return 	y;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getZ()
+	 */
+	public int getZ() {
+		return CENTRE;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see Controller#getButtons()
+	 */
 	public int getButtons() {
 		return 0;
 	}
