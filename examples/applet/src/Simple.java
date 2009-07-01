@@ -43,11 +43,12 @@ public class Simple extends Applet implements Runnable {
 	}
 
 	/**
-	 * Sets up the back buffer then prepares the 'game' for when the browser
-	 * plug-in is ready.
+	 * Sets up the back buffer, creates a joystick instance (if possible),
+	 * then starts the timer.
 	 */
 	public void start() {
-		requestFocus();
+		setFocusable(true);
+		requestFocusInWindow();
 
 		if (buffer == null) {
 			Dimension d = getSize();
@@ -57,7 +58,9 @@ public class Simple extends Applet implements Runnable {
 			buffer = bufferImage.getGraphics();
 		}
 		
-		attach();
+		if (controller instanceof Joystick == false) {
+			attach();
+		}
 		
 		thread = new Thread(this);
 		thread.start();
@@ -74,7 +77,7 @@ public class Simple extends Applet implements Runnable {
 	public void attach() {
 		Controller ctrl = null;
 		try {
-			ctrl = new Joystick(this);
+			ctrl = Joystick.createJoystickInstance(this);
 		} catch (Exception e) {
 			System.err.println("Couldn't attach to joystick  so switching to key based control: " + e);
 		}
@@ -88,41 +91,40 @@ public class Simple extends Applet implements Runnable {
 	 */
 	public void run() {
 		while (Thread.currentThread() == thread) {
-			// reads the state of the device
-			//controller.poll();
-			
-			// gets the axes
-			int ctlX = controller.getX();
-			int ctlY = controller.getY();
-			
-			// advances the sprite's position accordingly
-			if (ctlX < 28672) {
-				x += (ctlX - 32768) / 2048;
-			} else {
-				if (ctlX > 36864) {
+			if (controller.isConnected()) {
+				// gets the axes
+				int ctlX = controller.getX();
+				int ctlY = controller.getY();
+				
+				// advances the sprite's position accordingly
+				if (ctlX < 28672) {
 					x += (ctlX - 32768) / 2048;
+				} else {
+					if (ctlX > 36864) {
+						x += (ctlX - 32768) / 2048;
+					}
 				}
-			}
-			if (x < 0) {
-				x = 0;
-			} else {
-				if (x > width) {
-					x = width;
+				if (x < 0) {
+					x = 0;
+				} else {
+					if (x > width) {
+						x = width;
+					}
 				}
-			}
-			
-			if (ctlY < 28672) {
-				y += (ctlY - 32768) / 2048;
-			} else {
-				if (ctlY > 36864) {
+				
+				if (ctlY < 28672) {
 					y += (ctlY - 32768) / 2048;
+				} else {
+					if (ctlY > 36864) {
+						y += (ctlY - 32768) / 2048;
+					}
 				}
-			}
-			if (y < 0) {
-				y = 0;
-			} else {
-				if (y > height) {
-					y = height;
+				if (y < 0) {
+					y = 0;
+				} else {
+					if (y > height) {
+						y = height;
+					}
 				}
 			}
 			

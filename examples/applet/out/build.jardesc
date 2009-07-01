@@ -11,9 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <folder path="/Simple Applet/out"/>
-        <file path="/Simple Applet/.classpath"/>
-        <file path="/Simple Applet/.project"/>
         <javaElement handleIdentifier="=Simple Applet/src"/>
     </selectedElements>
     <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
