@@ -1,11 +1,15 @@
 import java.applet.Applet;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import sun.applet.AppletSecurityException;
+
 /**
  * Example implementation of adding joystick control to a Java applet.
  */
+@SuppressWarnings("serial")
 public class Simple extends Applet implements Runnable {
 	/**
 	 *	An instance of a Controller of any kind.
@@ -38,7 +42,11 @@ public class Simple extends Applet implements Runnable {
 	int height;	// applet's width
 	
 	public void init() {
-		sheep = getImage(getCodeBase(), "killer_sheep.gif");
+		try {
+			sheep = getImage(getClass().getResource("/killer_sheep.gif"));
+		} catch (AppletSecurityException e) {
+			// ignore
+		}
 		controller = new Keyboard(this);
 	}
 
@@ -145,7 +153,12 @@ public class Simple extends Applet implements Runnable {
 			buffer.setColor(getBackground());
 			buffer.fillRect(0, 0, width, height);
 			
-			buffer.drawImage(sheep, x, y, this);
+			if (sheep != null) {
+				buffer.drawImage(sheep, x, y, this);
+			} else {
+				buffer.setColor(Color.RED);
+				buffer.drawRect(x, y, 64, 64);
+			}
 			g.drawImage(bufferImage, 0, 0, this);
 		} else {
 			super.paint(g);
