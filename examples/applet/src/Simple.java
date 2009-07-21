@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import sun.applet.AppletSecurityException;
-
 /**
  * Example implementation of adding joystick control to a Java applet.
  */
@@ -43,8 +41,8 @@ public class Simple extends Applet implements Runnable {
 	
 	public void init() {
 		try {
-			sheep = getImage(getClass().getResource("/killer_sheep.gif"));
-		} catch (AppletSecurityException e) {
+			sheep = getImage(getClass().getResource("killer_sheep.gif"));
+		} catch (Exception e) {
 			// ignore
 		}
 		controller = new Keyboard(this);
