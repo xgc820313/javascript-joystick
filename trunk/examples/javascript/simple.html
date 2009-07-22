@@ -1,0 +1,81 @@
+<html>
+	<head>
+		<title>Simple JavaScript Example</title>
+		<script type="text/javascript" src="joystick.js"></script>
+		<script type="text/javascript">
+
+/**
+ * Sprite is a simple wrapper around an IMAGE tag, allowing the creation
+ * and movement of a graphic element.
+ */
+function Sprite(src, x, y) {
+	this._image = document.createElement("IMG");
+	this._image.src = src;
+	this._image.style.position = "absolute";
+
+	this.x = x;
+	this.y = y;
+
+	this.draw();
+}
+
+Sprite.prototype.addToElement = function(element) {
+	element.appendChild(this._image);
+};
+
+/**
+ * Updates the sprite's position.
+ */
+Sprite.prototype.draw = function() {
+	this._image.style.left = this.x + "px";
+	this._image.style.top  = this.y + "px";
+};
+
+/****************************************************************************/
+
+/**
+ * Milliseconds between each frame.
+ */
+var INTERVAL = 50;
+
+var sheep;
+var stick;
+
+/**
+ * Create and add a sprite to the page, then create the joystick wrapper, and
+ * finally start the draw loop.
+ */
+function init () {
+	sheep = new Sprite("killer_sheep.gif", 64, 64);
+	sheep.addToElement(document.body);
+	
+	stick = new Joystick();
+	
+	loop();
+}
+
+/**
+ * Check if the stick axes are outside of the 'deadzone', update the sheep's
+ * position with the scaled values, then rince and repeat.
+ */
+function loop() {
+	var x = stick.getX();
+	if (x < 28672 || x > 36864) {
+		sheep.x += (x - 32768) / 2048;
+	}
+	var y = stick.getY();
+	if (y < 28672 || y > 36864) {
+		sheep.y += (y - 32768) / 2048;
+	}
+	
+	sheep.draw();
+	
+	setTimeout("loop()", INTERVAL);
+}
+
+		</script>
+	</head>
+	<body bgcolor="white" onLoad="init()">
+		<p>Note: when running the page as a local file, IE classes the ActiveX as unsafe. This works without warning when the page is on-line.</p>
+	</body>
+</html>
