@@ -1,0 +1,1 @@
+In order to build this Eclipse project you'll need to add the plugin.jar file to your classpath. This file is part of the standard Java installation (and is only needed for compiling, since the browser/Java plug-in knows all about it).
