@@ -17,6 +17,7 @@ The plug-in currently works with Firefox, IE, Opera and Safari on Windows, and S
 ||int    ||r<br>Rudder (or r-axis).||
 ||boolean||a<br>`true` if the A button is pressed (the A button can be reassigned to any of the controller's buttons)||
 ||boolean||b<br>`true` if the B button is pressed (the B button can be reassigned to any of the controller's buttons)||
+||int||An integer representing the state of all the game controller's buttons as individual bits||
 
 == Embedding ==
 For IE (or other ActiveX containers) the class ID is `3AE9ED90-4B59-47A0-873B-7B71554B3C3E`. For all other browsers the MIME-type is `application/x-vnd.numfum-joystick`. Sample code to follow.
