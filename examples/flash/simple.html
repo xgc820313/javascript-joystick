@@ -1,0 +1,21 @@
+<html><head>
+	<title>Simple Flash Example</title>
+	<script type="text/javascript" src="joystick.js"></script>
+	</head>
+	<body bgcolor="white">
+		<p>Note: when running the page as a local file, Flash might flag the ActionScript to JavaScript calls as unsafe, in which case the "security settings for content developers" will need tweaking. This works without warning when the page is on-line.</p>
+		<object id="sw_ie" width="400" height="300"
+			classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+			codebase="'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0">
+			<param name="quality" value="high" />
+			<param name="allowScriptAccess" value="always" />
+			<param name="movie" VALUE="simple.swf" />
+			<embed id="sw_ns" width="400" height="300"
+				type="application/x-shockwave-flash"
+				pluginspage="http://www.adobe.com/go/getflashplayer"
+				quality="high"
+				allowScriptAccess="always"
+				src="simple.swf" />
+		</object>
+	</body>
+</html> 
