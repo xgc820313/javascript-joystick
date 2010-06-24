@@ -13,9 +13,9 @@ public class Joystick implements Controller {
 	private final JSObject plugin;
 	
 	/**
-	 *	Creates a joystick instance in the applet's containing page.
-	 *
-	 *	@param applet the calling applet
+	 * Creates a joystick instance in the applet's containing page.
+	 * 
+	 * @param applet the calling applet
 	 */
 	public Joystick(JSObject plugin) {
 		this.plugin = plugin;

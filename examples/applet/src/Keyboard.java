@@ -4,15 +4,34 @@ import java.awt.event.KeyListener;
 
 /**
  * Example keyboard class as a fallback for when no joystick is connected.
- *
- * @param applet the calling applet
  */
 public class Keyboard implements Controller, KeyListener {
-	private boolean up = false;
-	private boolean down = false;
-	private boolean left = false;
-	private boolean right = false;
+	/**
+	 * Current state of the up key.
+	 */
+	private boolean up;
 	
+	/**
+	 * Current state of the down key.
+	 */
+	private boolean down;
+	
+	/**
+	 * Current state of the left key.
+	 */
+	private boolean left;
+	
+	/**
+	 * Current state of the right key.
+	 */
+	private boolean right;
+	
+	/**
+	 * Creates a keyboard controller receiving key events from the specified
+	 * container.
+	 * 
+	 * @param container AWT container receiving key events
+	 */
 	public Keyboard(Container container) {
 		container.addKeyListener(this);
 	}
@@ -22,7 +41,7 @@ public class Keyboard implements Controller, KeyListener {
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
 	public void keyPressed(KeyEvent e) {
-		this.check(e.getKeyCode(), true);
+		check(e.getKeyCode(), true);
 	}
 	
 	/*
@@ -30,7 +49,7 @@ public class Keyboard implements Controller, KeyListener {
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
 	public void keyReleased(KeyEvent e) {
-		this.check(e.getKeyCode(), false);
+		check(e.getKeyCode(), false);
 	}
 	
 	/*
@@ -39,19 +58,25 @@ public class Keyboard implements Controller, KeyListener {
 	 */
 	public void keyTyped(KeyEvent e) {}
 	
+	/**
+	 * Converts keycodes to the joystick position equivalents.
+	 * 
+	 * @param keyCode Java keycode
+	 * @param status {@code true} for key down, {@code false} for key up
+	 */
 	private void check(int keyCode, boolean status) {
 		switch (keyCode) {
 		case KeyEvent.VK_UP:
-			this.up = status;
+			up = status;
 			break;
 		case KeyEvent.VK_DOWN:
-			this.down = status;
+			down = status;
 			break;
 		case KeyEvent.VK_LEFT:
-			this.left = status;
+			left = status;
 			break;
 		case KeyEvent.VK_RIGHT:
-			this.right = status;
+			right = status;
 			break;
 		}
 	}
@@ -75,10 +100,10 @@ public class Keyboard implements Controller, KeyListener {
 	 * @see Controller#getX()
 	 */
 	public int getX() {
-		if (this.left) {
+		if (left) {
 			return 0;
 		} else {
-			if (this.right) {
+			if (right) {
 				return 65535;
 			} else {
 				return CENTRE;
@@ -91,10 +116,10 @@ public class Keyboard implements Controller, KeyListener {
 	 * @see Controller#getY()
 	 */
 	public int getY() {
-		if (this.up) {
+		if (up) {
 			return 0;
 		} else {
-			if (this.down) {
+			if (down) {
 				return 65535;
 			} else {
 				return CENTRE;

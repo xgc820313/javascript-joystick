@@ -10,34 +10,59 @@ import java.awt.Image;
 @SuppressWarnings("serial")
 public class Simple extends Applet implements Runnable {
 	/**
-	 *	An instance of a Controller of any kind.
+	 * An instance of a Controller of any kind.
 	 */
-	Controller controller = null;
+	private Controller controller;
 	
 	/**
-	 *	The 'game' thread.
+	 * The 'game' thread.
 	 */
-	Thread thread = null;
+	private Thread thread;
 	
 	/**
 	 * The sprite used in this example.
 	 */
-	Image sheep = null;
-	int x = 50;	// sprite's x axis
-	int y = 50;	// sprite's y axis
+	private Image sheep;
+	
+	/**
+	 * Sheep sprite's x-axis.
+	 */
+	private int x;
+	
+	/**
+	 * Sheep sprite's y-axis.
+	 */
+	private int y;
 	
 	/**
 	 * The buffer's image context.
+	 * 
+	 * @see #buffer
 	 */
-	Image bufferImage;
+	private Image bufferImage;
 	
 	/**
 	 * Used for double buffering the applet's canvas.
 	 */
-	Graphics buffer;
-
-	int width;	// applet's width
-	int height;	// applet's width
+	private Graphics buffer;
+	
+	/**
+	 * Applet width at startup.
+	 */
+	private int width;
+	
+	/**
+	 * Applet height at startup.
+	 */
+	private int height;
+	
+	/**
+	 * Creates the applet and initialises the sheep's start position.
+	 */
+	public Simple() {
+		x = 50;
+		y = 50;
+	}
 	
 	public void init() {
 		try {
@@ -46,6 +71,22 @@ public class Simple extends Applet implements Runnable {
 			// ignore
 		}
 		controller = new Keyboard(this);
+	}
+		
+	/**
+	 * Tries to create a joystick plug-in instance, falling back to keyboard
+	 * control if it fails.
+	 */
+	public void attach() {
+		Controller ctrl = null;
+		try {
+			ctrl = Joystick.createJoystickInstance(this);
+		} catch (Exception e) {
+			System.err.println("Couldn't attach to joystick  so switching to key based control: " + e);
+		}
+		if (ctrl != null) {
+			controller = ctrl;
+		}
 	}
 
 	/**
@@ -64,7 +105,7 @@ public class Simple extends Applet implements Runnable {
 			buffer = bufferImage.getGraphics();
 		}
 		
-		if (controller instanceof Joystick == false) {
+		if (!(controller instanceof Joystick)) {
 			attach();
 		}
 		
@@ -72,37 +113,31 @@ public class Simple extends Applet implements Runnable {
 		thread.start();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.applet.Applet#stop()
+	 */
 	public void stop() {
 		thread = null;
 	}
-		
-	/**
-	 * Tries to create a joystick plug-in instance, falling back to keyboard
-	 * control if it fails.
-	 */
-	public void attach() {
-		Controller ctrl = null;
-		try {
-			ctrl = Joystick.createJoystickInstance(this);
-		} catch (Exception e) {
-			System.err.println("Couldn't attach to joystick  so switching to key based control: " + e);
-		}
-		if (ctrl != null) {
-			controller = ctrl;
-		}
-	}
 	
 	/**
-	 *	The game loop.
+	 * The game loop.
 	 */
 	public void run() {
 		while (Thread.currentThread() == thread) {
 			if (controller.isConnected()) {
-				// gets the axes
+				/*
+				 * Reads the axes (either from a joystick or, if none is
+				 * connected, the keyboard).
+				 */
 				int ctlX = controller.getX();
 				int ctlY = controller.getY();
-				
-				// advances the sprite's position accordingly
+				/*
+				 * Updates the sprite's position (with a little deadzone,
+				 * taking values from 28672 to 36864 as being within the
+				 * stick's centre).
+				 */
 				if (ctlX < 28672) {
 					x += (ctlX - 32768) / 2048;
 				} else {
@@ -110,6 +145,9 @@ public class Simple extends Applet implements Runnable {
 						x += (ctlX - 32768) / 2048;
 					}
 				}
+				/*
+				 * Clamp the sprite between the left and right of the applet.
+				 */
 				if (x < 0) {
 					x = 0;
 				} else {
@@ -117,7 +155,9 @@ public class Simple extends Applet implements Runnable {
 						x = width;
 					}
 				}
-				
+				/*
+				 * Do the same as above for the y-axis.
+				 */
 				if (ctlY < 28672) {
 					y += (ctlY - 32768) / 2048;
 				} else {
@@ -142,10 +182,18 @@ public class Simple extends Applet implements Runnable {
 		}
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.Container#update(java.awt.Graphics)
+	 */
 	public void update(Graphics g) {
 		paint(g);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.Container#paint(java.awt.Graphics)
+	 */
 	public void paint(Graphics g) {
 		if (buffer != null) {
 			buffer.setColor(getBackground());

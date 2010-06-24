@@ -1,9 +1,9 @@
 /**
- *	Defines the basic requirements for an input method.
+ * Defines the basic requirements for an input method.
  */
 public interface Controller {
 	/**
-	 *	Value of an axis when centred.
+	 * Value of an axis when centred.
 	 */
 	public final static int CENTRE = 32768;
 	
