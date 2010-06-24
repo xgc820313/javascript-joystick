@@ -1,1 +1,1 @@
-In order to build this Eclipse project you'll need to add the plugin.jar file to your classpath. This file is part of the standard Java installation (and is only needed for compiling, since the browser/Java plug-in knows all about it).
+The file lib/plugin.zip is only to build applet as a standalone project in Eclipse (and it's only a stub). For deployment the nextscape.javascript.* classes are part of the standard Java installation and should not be rolled into the final jar.
