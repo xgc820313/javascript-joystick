@@ -3,14 +3,15 @@
 Joystick::Joystick() : device(0), autoPoll(true), buttonA(JOY_BUTTON1), buttonB(JOY_BUTTON2) {
 	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
 	joyInfoEx.dwSize = sizeof(joyInfoEx);
-	ZeroMemory(&joyCaps, sizeof(joyCaps));
 	setDevice(device);
 }
 
 Joystick::~Joystick() {}
 
 bool Joystick::setDevice(int index) {
-	joyGetDevCaps(device = index, &joyCaps, sizeof(joyCaps));
+	device = index;
+	ZeroMemory(&joyCaps, sizeof(joyCaps));
+	joyGetDevCaps(device, &joyCaps, sizeof(joyCaps));
 	return isConnected();
 }
 

@@ -1,53 +1,71 @@
-!include "mozillaplugin.nsh"
-!include "LogicLib.nsh"
-
-; TODO: simplify editing the version numbers
-; TODO: only uninstall the files that were installed (and not the entire folder)
 ; TODO: check for errors after writing/deleting files (can't delete/overwrite whilst a plug-in is in use)
 
-; The name of the installer
+;--------------------------------
+
+; NOTE: depends on this script in order to run:
+;       http://nsis.sourceforge.net/Get_Mozilla_Plugin_Path
+
+!include "mozillaplugin.nsh"
+!include "LogicLib.nsh"
+!include "MUI2.nsh"
+
+;--------------------------------
+
+; Version number (both the ActiveX and Mozilla plug-in use the same)
+!define VERSION_NUM "0.6.1.1"
+
+; IE plug-in UUID
+!define ACTIVEX_UUID "3AE9ED90-4B59-47A0-873B-7B71554B3C3E"
+
+; Name of the installer
 Name "JavaScript Joystick Plug-in"
 
-; The file to write
+; File to write
 OutFile "jsjs-installer.exe"
 
-; The default installation folder
+; Default installation folder
 InstallDir "$PROGRAMFILES\Joystick Plugin"
-InstallDirRegKey HKCU "Software\JSJS" ""
+InstallDirRegKey HKLM "Software\JSJS" "InstallDir"
 
-; Request application privileges for Windows Vista
+; Request application privileges for Windows Vista/7
 RequestExecutionLevel admin
+
+;--------------------------------
+
+!define MUI_ABORTWARNING
+
+; Pages
+
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+
+
+!insertmacro MUI_LANGUAGE "English"
 
 ;--------------------------------
 
 ; Installer version info
 
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-
-VIProductVersion "0.6.0.1"
+VIProductVersion "${VERSION_NUM}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "JavaScript Joystick Plug-in"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Numfum Ltd"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "©2001-2002, 2009 Numfum Ltd"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Browser plug-ins to enable JavaScript access to game controllers"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "0.6.0"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION_NUM}"
 
 ;--------------------------------
 
-; Pages
-
-Page components
-Page directory
-Page instfiles
-
-;--------------------------------
-
-Section "Plugin Common Files (required)"
+Section "Common Files" Common
   ; Flag as being required
   SectionIn RO
   
   ; Set and then store the installation folder
   SetOutPath $INSTDIR
-  WriteRegStr HKCU "Software\JSJS" "" $INSTDIR
+  WriteRegStr HKLM "Software\JSJS" "InstallDir" "$INSTDIR"
 
   ; Write the IE ActiveX control (even if it's not used)
   File "release\iejoystick.dll"
@@ -55,22 +73,25 @@ Section "Plugin Common Files (required)"
   File "release\npjoystick.dll"
   
   ; Write the Windows uninstaller keys
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS" "DisplayName" "JavaScript Joystick Plug-in (remove only)"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS" "NoRepair" 1
+  !define JSJS_UNINSTALLER_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS"
+  WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "DisplayName" "JavaScript Joystick Plug-in"
+  WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "Publisher" "Numfum Ltd"
+  WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD HKLM "${JSJS_UNINSTALLER_KEY}" "NoModify" 1
+  WriteRegDWORD HKLM "${JSJS_UNINSTALLER_KEY}" "NoRepair" 1
   WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
-Section "Firefox/Opera/Safari Plug-in"
+Section "Firefox" Firefox
   ; Register Mozilla plug-in (recommended but appears to be ignored)
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1" "Description" "Allows JavaScript access to joysticks"
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1" "Path"        "$INSTDIR\npjoystick.dll"
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1" "ProductName" "JavaScript Joystick Plugin"
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1" "Vendor"      "Numfum Ltd"
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1" "Version"     "0.6.0.1"
-  WriteRegStr HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1\MimeTypes\application/x-vnd.numfum-joystick" "Description" "JavaScript Joystick Plugin"
-
+  !define MOZILLA_PLUGIN_KEY "Software\MozillaPlugins\@numfum.com/JSJS,version=${VERSION_NUM}"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Description" "Allows JavaScript access to joysticks"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Path"        "$INSTDIR\npjoystick.dll"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "ProductName" "JavaScript Joystick Plugin"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Vendor"      "Numfum Ltd"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Version"     "${VERSION_NUM}"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}\MimeTypes\application/x-vnd.numfum-joystick" "Description" "JavaScript Joystick Plugin"
+  
   ; Then write a copy to the plug-ins folder
   !insertmacro MozillaPluginDir
   Pop $R0
@@ -81,29 +102,54 @@ Section "Firefox/Opera/Safari Plug-in"
   ${EndIf}
 SectionEnd
 
-Section "Internet Explorer ActiveX"
-  ; Register ActiveX control and mark it as 'approved'
-  ExecWait 'regsvr32 /s "$INSTDIR\iejoystick.dll"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{3AE9ED90-4B59-47A0-873B-7B71554B3C3E}" "" ""
+Section "Internet Explorer" Explorer
+  ; Mark the ActiveX control as 'approved' then register it
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{${ACTIVEX_UUID}}" "" ""
+  RegDLL "$INSTDIR\iejoystick.dll"
+  
+  ; Then enable the ActiveX to run in IE for any domain
+  !define IE_SITE_SETTINGS_KEY "Software\Microsoft\Windows\CurrentVersion\Ext\Stats\{${ACTIVEX_UUID}}\iexplore"
+  WriteRegDWORD HKCU "${IE_SITE_SETTINGS_KEY}" "Flags" 0
+  WriteRegDWORD HKCU "${IE_SITE_SETTINGS_KEY}" "Type"  1
 SectionEnd
 
+;--------------------------------
+
+; Descriptions
+
+LangString DESC_Common   ${LANG_ENGLISH} "Common files required by all plug-in versions."
+LangString DESC_Firefox  ${LANG_ENGLISH} "Firefox plug-in. Also compatible with Opera, Safari and Chrome."
+LangString DESC_Explorer ${LANG_ENGLISH} "Internet Explorer ActiveX. Only compatible with 32-bit IE (64-bit IE does not support plug-ins)."
+
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${Common}   $(DESC_Common)
+  !insertmacro MUI_DESCRIPTION_TEXT ${Firefox}  $(DESC_Firefox)
+  !insertmacro MUI_DESCRIPTION_TEXT ${Explorer} $(DESC_Explorer)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
+
+;--------------------------------
+
 Section "Uninstall"
+  ; All removals are flagged /REBOOTOK since a plug-in might be active in a browser
+
   ; Unregister the plug-in then remove the file
-  DeleteRegKey HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=0.6.0.1"
+  DeleteRegKey HKLM "Software\MozillaPlugins\@numfum.com/JSJS,version=${VERSION_NUM}"
 
   !insertmacro MozillaPluginDir
   Pop $R0
   ${If} $R0 != ''
-    Delete $R0\npjoystick.dll
+    Delete /REBOOTOK "$R0\npjoystick.dll"
   ${EndIf}
   
-  ; Unregister the ActiveX then remove the approval
-  ExecWait 'regsvr32 /s /u "$INSTDIR\iejoystick.dll"'
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{3AE9ED90-4B59-47A0-873B-7B71554B3C3E}"
+  ; Unregister the ActiveX then remove the approvals
+  UnRegDLL "$INSTDIR\iejoystick.dll"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{${ACTIVEX_UUID}}"
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Ext\Stats\{${ACTIVEX_UUID}}"
   
-  ; Remove the entire contents of the install folder
-  RMDir /r $INSTDIR
+  ; Remove the installed files (and the folder)
+  RMDir /r /REBOOTOK "$INSTDIR"
 
-  ; Then finally delete the install folder's regsitry key
-  DeleteRegKey /ifempty HKCU "Software\JSJS"
+  ; Then finally delete the installer's regsitry keys
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS"
+  DeleteRegKey HKLM "Software\JSJS"
 SectionEnd
