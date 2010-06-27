@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,6,0,1
- PRODUCTVERSION 0,6,0,1
+ FILEVERSION 0,6,1,1
+ PRODUCTVERSION 0,6,1,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -72,12 +72,12 @@ BEGIN
             VALUE "Comments", "IE plug-in enabling JavaScript access to game controllers"
             VALUE "CompanyName", "Numfum Ltd"
             VALUE "FileDescription", "IE plug-in enabling JavaScript access to game controllers"
-            VALUE "FileVersion", "0, 6, 0, 1"
+            VALUE "FileVersion", "0, 6, 1, 1"
             VALUE "InternalName", "iejoystick"
             VALUE "LegalCopyright", "Copyright 2001-02, 2009 Numfum Ltd"
             VALUE "OriginalFilename", "iejoystick.dll"
             VALUE "ProductName", "JavaScript Joystick Plugin"
-            VALUE "ProductVersion", "0, 6, 0, 1"
+            VALUE "ProductVersion", "0, 6, 1, 1"
         END
     END
     BLOCK "VarFileInfo"
