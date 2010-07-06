@@ -10,7 +10,7 @@ class Joystick {
 	/**
 	 * Maximum value for the joystick's axes.
 	 */
-	public static var MAX_AXIS:Number = 4;
+	public static var MAX_AXIS:Number = 8;
 	
 	/**
 	 * Internal flag to denote that no joystick was found and values are taken
@@ -48,10 +48,11 @@ class Joystick {
 	 * 
 	 * @param idx joystick plug-in index on the browser side (defaults to zero)
 	 */
-	public function Joystick(idx) {
+	public function Joystick(idx:Number) {
+		addBrowserScripts();
 		if (ExternalInterface.available) {
 			try {
-				this.id = ExternalInterface.call("Joystick.register", (typeof idx == "number") ? idx : 0);
+				this.id = ExternalInterface.call("this._register_", idx);
 			} catch (e) {
 				this.id = Joystick.USE_KEYS;
 			}
@@ -106,21 +107,29 @@ class Joystick {
 		if (this.id == Joystick.USE_KEYS) {
 			this.readKeys();
 		} else {
-			var ext = ExternalInterface.call("Joystick.read", this.id, "x", "y", "a", "b");
-			if (ext && ext.length >= 4) {
-				this._x = Number( ext[0]) / (32768 / Joystick.MAX_AXIS) - Joystick.MAX_AXIS;
-				this._y = Number( ext[1]) / (32768 / Joystick.MAX_AXIS) - Joystick.MAX_AXIS;
-				this._a = Boolean(ext[2]);
-				this._b = Boolean(ext[3]);
-			}
+			this._x = this.readStick("x", true);
+			this._y = this.readStick("y", true);
+			this._a = Boolean(this.readStick("a", false));
+			this._b = Boolean(this.readStick("b", false));
 		}
+	}
+	
+	/**
+	 * Reads the named property from the browser plug-in.
+	 */
+	private function readStick(prop:String, axis:Boolean):Number {
+		var res = ExternalInterface.call("this._read_", this.id, prop);
+		if (typeof res == "number" && axis) {
+			return res / (32768 / Joystick.MAX_AXIS) - Joystick.MAX_AXIS;
+		}
+		return Number(res);
 	}
 	
 	/**
 	 * Fallback to read the joystick values from the keyboard (cursor keys for
 	 * direction, SPACE for button 'a', and ENTER for button 'b').
 	 */
-	public function readKeys():Void {
+	private function readKeys():Void {
 		if (Key.isDown(Key.LEFT)) {
 			if (this._x > -Joystick.MAX_AXIS) {
 				this._x -= 1;
@@ -177,5 +186,110 @@ class Joystick {
 	 */
 	public function toString():String {
 		return "joystick wrapper object";
+	}
+	
+	//**************************** Browser Helpers *****************************/
+	
+	/**
+	 * Flags if the helper scripts need adding to the browser.
+	 */
+	private static var needScripts:Boolean = true;
+	
+	/**
+	 * Adds the scripts into the owning web page (and they're only added once).
+	 */
+	private static function addBrowserScripts():Void {
+		if (ExternalInterface.available && needScripts) {
+			/*
+			 * See the Joystick.createPlugin in joystick.js for how this works.
+			 */
+			ExternalInterface.call("eval", "if (!this._createPlugin_) {this._createPlugin_ = function()\
+{\
+	var ctrlIE = document.createElement('object');\
+	if (ctrlIE) {\
+		try {\
+			ctrlIE.classid = 'CLSID:3AE9ED90-4B59-47A0-873B-7B71554B3C3E';\
+			if (ctrlIE.setDevice(0) != null) {\
+				return ctrlIE;\
+			}\
+		} catch (e) {}\
+	}\
+	var ctrlFF = document.createElement('embed');\
+	if (ctrlFF) {\
+		if (navigator && navigator.plugins) {\
+			var found = false;\
+			for (var n = 0; n < navigator.plugins.length; n++) {\
+				if (navigator.plugins[n].name.indexOf('Joystick') != -1) {\
+					found = true;\
+					break;\
+				}\
+			}\
+			if (!found) {\
+				return null;\
+			}\
+		}\
+		try {\
+			ctrlFF.type = 'application/x-vnd.numfum-joystick';\
+			ctrlFF.width  = 0;\
+			ctrlFF.height = 0;\
+			document.body.appendChild(ctrlFF, document.body);\
+			if (ctrlFF.setDevice(0) != null) {\
+				return ctrlFF;\
+			}\
+		} catch (e) {}\
+		document.body.removeChild(ctrlFF);\
+	}\
+	return null;\
+}}");
+			/*
+			 * See the Joystick.register in joystick.js for how this works.
+			 */
+			ExternalInterface.call("eval", "if (!this._register_) {this._register_ = function(idx)\
+{\
+	if (!this._registered_) {\
+		 this._registered_ = [];\
+	}\
+	idx = Number(idx);\
+	if (idx < 0) {\
+		var stick = this._createPlugin_();\
+		if (stick) {\
+			return this._registered_[stick] - 1;\
+		}\
+	} else {\
+		if (this._registered_[idx]) {\
+			return idx;\
+		}\
+		var stick = this._createPlugin_();\
+		if (stick) {\
+			this._registered_[idx] = stick;\
+			return idx;\
+		}\
+	}\
+	return -1;\
+}}");
+			ExternalInterface.call("eval", "if (!this._read_) {this._read_ = function(idx, prop)\
+{\
+	if (!this._registered_) {\
+		return null;\
+	}\
+	var stick = this._registered_[Number(idx)];\
+	if (stick) {\
+		switch (prop) {\
+		case 'x':\
+			return stick.x;\
+		case 'y':\
+			return stick.y;\
+		case 'a':\
+			return stick.a;\
+		case 'b':\
+			return stick.b;\
+		default:\
+			return 0;\
+		}\
+	}\
+	return undefined;\
+}}");
+		}
+		needScripts = false;
 	}
 }
