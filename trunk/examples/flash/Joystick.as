@@ -52,7 +52,7 @@ class Joystick {
 		addBrowserScripts();
 		if (ExternalInterface.available) {
 			try {
-				this.id = ExternalInterface.call("this._register_", idx);
+				this.id = ExternalInterface.call("this._register_", (idx) ? idx : 0);
 			} catch (e) {
 				this.id = Joystick.USE_KEYS;
 			}
@@ -250,7 +250,7 @@ class Joystick {
 		 this._registered_ = [];\
 	}\
 	idx = Number(idx);\
-	if (idx < 0) {\
+	if (idx < 0 || isNaN(idx)) {\
 		var stick = this._createPlugin_();\
 		if (stick) {\
 			return this._registered_[stick] - 1;\
