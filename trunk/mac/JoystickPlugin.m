@@ -14,14 +14,13 @@
 }
 
 - (void)webPlugInInitialize {
-	if (stick == nil) {
-		stick = [[[Joystick alloc] init] retain];
-	}
+	[stick release];
+	 stick = [[[Joystick alloc] init] retain];
 }
 
 - (void)webPlugInDestroy {
 	[stick release];
-	stick = nil;
+	 stick = nil;
 }
 
 - (id)objectForWebScript {
