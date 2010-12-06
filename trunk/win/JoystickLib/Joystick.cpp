@@ -1,6 +1,10 @@
 #include "Joystick.h"
 
+// Uncomment this line to build the class without connecting to real devices
+//#define DUMMY_JOYSTICK
+
 Joystick::Joystick() : device(0), autoPoll(true), buttonA(JOY_BUTTON1), buttonB(JOY_BUTTON2) {
+	ZeroMemory(&joyCaps,   sizeof(joyCaps));
 	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
 	joyInfoEx.dwSize = sizeof(joyInfoEx);
 	setDevice(device);
@@ -8,10 +12,19 @@ Joystick::Joystick() : device(0), autoPoll(true), buttonA(JOY_BUTTON1), buttonB(
 
 Joystick::~Joystick() {}
 
+int Joystick::getNumDevices() {
+#ifndef DUMMY_JOYSTICK
+	return joyGetNumDevs();
+#else
+	return 1;
+#endif
+}
+
 bool Joystick::setDevice(int index) {
+#ifndef DUMMY_JOYSTICK
+	joyGetDevCaps(index, &joyCaps, sizeof(joyCaps));
+#endif
 	device = index;
-	ZeroMemory(&joyCaps, sizeof(joyCaps));
-	joyGetDevCaps(device, &joyCaps, sizeof(joyCaps));
 	return isConnected();
 }
 
@@ -20,7 +33,11 @@ int Joystick::getDevice() {
 }
 
 bool Joystick::isConnected() {
+#ifndef DUMMY_JOYSTICK
 	return joyGetPosEx(device, &joyInfoEx) == JOYERR_NOERROR;
+#else
+	return true;
+#endif
 }
 
 void Joystick::setAutoPoll(bool enabled) {
@@ -36,7 +53,9 @@ bool Joystick::getAutoPoll() {
 
 void Joystick::poll() {
 	if (!autoPoll) {
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 }
 
@@ -57,13 +76,13 @@ int Joystick::getNumButtons() {
 }
 
 void Joystick::setButtonA(int button) {
-	if (button >= 0 && button < (signed) joyCaps.wNumButtons) {
+	if (button >= 0 && button < (signed) getNumButtons()) {
 		buttonA = 1 << button;
 	}
 }
 
 void Joystick::setButtonB(int button) {
-	if (button >= 0 && button < (signed) joyCaps.wNumButtons) {
+	if (button >= 0 && button < (signed) getNumButtons()) {
 		buttonB = 1 << button;
 	}
 }
@@ -73,13 +92,19 @@ void Joystick::calibrate() {
 }
 
 char* Joystick::getProductName() {
+#ifndef DUMMY_JOYSTICK
 	return joyCaps.szPname;
+#else
+	return "Dummy";
+#endif
 }
 
 int Joystick::getX() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNX;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwXpos;
 }
@@ -87,7 +112,9 @@ int Joystick::getX() {
 int Joystick::getY() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNY;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwYpos;
 }
@@ -95,7 +122,9 @@ int Joystick::getY() {
 int Joystick::getZ() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNZ;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwZpos;
 }
@@ -103,7 +132,9 @@ int Joystick::getZ() {
 int Joystick::getR() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNR;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwRpos;
 }
@@ -119,7 +150,9 @@ bool Joystick::getB() {
 int Joystick::getButtons() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNBUTTONS;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwButtons;
 }
@@ -127,7 +160,9 @@ int Joystick::getButtons() {
 int Joystick::getPOV() {
 	if (autoPoll) {
 		joyInfoEx.dwFlags = JOY_RETURNPOV;
+#ifndef DUMMY_JOYSTICK
 		joyGetPosEx(device, &joyInfoEx);
+#endif
 	}
 	return joyInfoEx.dwPOV;
 }

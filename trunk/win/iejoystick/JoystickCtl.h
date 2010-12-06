@@ -65,6 +65,7 @@ END_MSG_MAP()
 
 // IJoystickCtl
 public:
+	STDMETHOD(getNumDevices)(/*[out, retval]*/ UINT *pVal);
 	STDMETHOD(setDevice)(/*[in]*/ UINT device, /*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(getDevice)(/*[out, retval]*/ UINT *pVal);
 	STDMETHOD(isConnected)(/*[out, retval]*/ VARIANT_BOOL *pVal);

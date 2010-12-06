@@ -8,7 +8,8 @@ class Joystick
 public:
 	Joystick();		// creates a new instance defaulting to device 0
 	~Joystick();
-
+	
+	int getNumDevices();			// returns the number of devices supported by the joystick driver
 	bool setDevice(int index);		// sets the hardware device index this instance reads from, returning true if a stick or pad is connected
 	int getDevice();				// returns the hardware device index this instance is reading from
 	bool isConnected();				// returns true if a stick or pad is connected

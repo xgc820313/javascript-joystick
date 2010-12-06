@@ -4,14 +4,15 @@
 #include "ScriptablePluginObjectBase.h"
 #include "Joystick.h"
 
-#define NUM_METHODS 13
+#define NUM_METHODS 14
 #define NUM_PROPERTIES 12
 
 class ScriptablePluginObject : public ScriptablePluginObjectBase
 {
 private:
 	Joystick stick;
-
+	
+	NPIdentifier getNumDevices_id;
 	NPIdentifier setDevice_id;
 	NPIdentifier getDevice_id;
 	NPIdentifier isConnected_id;
@@ -38,12 +39,12 @@ private:
 	NPIdentifier propDown_id;
 	NPIdentifier propLeft_id;
 	NPIdentifier propRight_id;
-
+	
 	NPIdentifier methodId[NUM_METHODS];
 	NPIdentifier propertyId[NUM_PROPERTIES];
 public:
 	ScriptablePluginObject(NPP npp);
-
+	
 	virtual bool HasMethod(NPIdentifier name);
 	virtual bool HasProperty(NPIdentifier name);
 	virtual bool Invoke(NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result);
