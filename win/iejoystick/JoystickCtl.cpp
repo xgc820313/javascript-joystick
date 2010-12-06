@@ -6,6 +6,11 @@ CJoystickCtl::CJoystickCtl() {
 	stick = Joystick();
 }
 
+STDMETHODIMP CJoystickCtl::getNumDevices(UINT *pVal) {
+	*pVal = stick.getNumDevices();
+	return S_OK;
+}
+
 STDMETHODIMP CJoystickCtl::setDevice(UINT device, VARIANT_BOOL *pVal) {
 	*pVal = stick.setDevice(device);
 	return S_OK;

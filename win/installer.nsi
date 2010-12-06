@@ -12,7 +12,7 @@
 ;--------------------------------
 
 ; Version number (both the ActiveX and Mozilla plug-in use the same)
-!define VERSION_NUM "0.6.1.1"
+!define VERSION_NUM "0.6.2.1"
 
 ; IE plug-in UUID
 !define ACTIVEX_UUID "3AE9ED90-4B59-47A0-873B-7B71554B3C3E"
@@ -53,7 +53,7 @@ RequestExecutionLevel admin
 VIProductVersion "${VERSION_NUM}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "JavaScript Joystick Plug-in"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Numfum Ltd"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "©2001-2002, 2009 Numfum Ltd"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "©2001-2002, 2009-2010 Numfum Ltd"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Browser plug-ins to enable JavaScript access to game controllers"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION_NUM}"
 
