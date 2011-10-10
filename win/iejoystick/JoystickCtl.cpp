@@ -46,6 +46,16 @@ STDMETHODIMP CJoystickCtl::hasRAxis(VARIANT_BOOL *pVal) {
 	return S_OK;
 }
 
+STDMETHODIMP CJoystickCtl::hasUAxis(VARIANT_BOOL *pVal) {
+	*pVal = stick.hasUAxis();
+	return S_OK;
+}
+
+STDMETHODIMP CJoystickCtl::hasVAxis(VARIANT_BOOL *pVal) {
+	*pVal = stick.hasVAxis();
+	return S_OK;
+}
+
 STDMETHODIMP CJoystickCtl::hasPOV(VARIANT_BOOL *pVal) {
 	*pVal = stick.hasPOV();
 	return S_OK;
@@ -96,6 +106,16 @@ STDMETHODIMP CJoystickCtl::get_z(DWORD *pVal) {
 
 STDMETHODIMP CJoystickCtl::get_r(DWORD *pVal) {
 	*pVal = stick.getR();
+	return S_OK;
+}
+
+STDMETHODIMP CJoystickCtl::get_u(DWORD *pVal) {
+	*pVal = stick.getU();
+	return S_OK;
+}
+
+STDMETHODIMP CJoystickCtl::get_v(DWORD *pVal) {
+	*pVal = stick.getV();
 	return S_OK;
 }
 

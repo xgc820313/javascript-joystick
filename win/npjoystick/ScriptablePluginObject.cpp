@@ -9,25 +9,29 @@ ScriptablePluginObject::ScriptablePluginObject(NPP npp) : ScriptablePluginObject
 	poll_id           = methodId[5]  = NPN_GetStringIdentifier("poll");
 	hasZAxis_id       = methodId[6]  = NPN_GetStringIdentifier("hasZAxis");
 	hasRAxis_id       = methodId[7]  = NPN_GetStringIdentifier("hasRAxis");
-	hasPOV_id         = methodId[8]  = NPN_GetStringIdentifier("hasPOV");
-	getNumButtons_id  = methodId[9]  = NPN_GetStringIdentifier("getNumButtons");
-	setButtonA_id     = methodId[10] = NPN_GetStringIdentifier("setButtonA");
-	setButtonB_id     = methodId[11] = NPN_GetStringIdentifier("setButtonB");
-	calibrate_id      = methodId[12] = NPN_GetStringIdentifier("calibrate");
-	getProductName_id = methodId[13] = NPN_GetStringIdentifier("getProductName");
+	hasUAxis_id       = methodId[8]  = NPN_GetStringIdentifier("hasUAxis");
+	hasVAxis_id       = methodId[9]  = NPN_GetStringIdentifier("hasVAxis");
+	hasPOV_id         = methodId[10] = NPN_GetStringIdentifier("hasPOV");
+	getNumButtons_id  = methodId[11] = NPN_GetStringIdentifier("getNumButtons");
+	setButtonA_id     = methodId[12] = NPN_GetStringIdentifier("setButtonA");
+	setButtonB_id     = methodId[13] = NPN_GetStringIdentifier("setButtonB");
+	calibrate_id      = methodId[14] = NPN_GetStringIdentifier("calibrate");
+	getProductName_id = methodId[15] = NPN_GetStringIdentifier("getProductName");
 	
 	propX_id = propertyId[0] = NPN_GetStringIdentifier("x");
 	propY_id = propertyId[1] = NPN_GetStringIdentifier("y");
 	propZ_id = propertyId[2] = NPN_GetStringIdentifier("z");
 	propR_id = propertyId[3] = NPN_GetStringIdentifier("r");
-	propA_id = propertyId[4] = NPN_GetStringIdentifier("a");
-	propB_id = propertyId[5] = NPN_GetStringIdentifier("b");
-	propButtons_id = propertyId[6]  = NPN_GetStringIdentifier("buttons");
-	propPov_id     = propertyId[7]  = NPN_GetStringIdentifier("pov");
-	propUp_id      = propertyId[8]  = NPN_GetStringIdentifier("up");
-	propDown_id    = propertyId[9]  = NPN_GetStringIdentifier("down");
-	propLeft_id    = propertyId[10] = NPN_GetStringIdentifier("left");
-	propRight_id   = propertyId[11] = NPN_GetStringIdentifier("right");
+	propU_id = propertyId[4] = NPN_GetStringIdentifier("u");
+	propV_id = propertyId[5] = NPN_GetStringIdentifier("v");
+	propA_id = propertyId[6] = NPN_GetStringIdentifier("a");
+	propB_id = propertyId[7] = NPN_GetStringIdentifier("b");
+	propButtons_id = propertyId[8]  = NPN_GetStringIdentifier("buttons");
+	propPov_id     = propertyId[9]  = NPN_GetStringIdentifier("pov");
+	propUp_id      = propertyId[10] = NPN_GetStringIdentifier("up");
+	propDown_id    = propertyId[11] = NPN_GetStringIdentifier("down");
+	propLeft_id    = propertyId[12] = NPN_GetStringIdentifier("left");
+	propRight_id   = propertyId[13] = NPN_GetStringIdentifier("right");
 }
 
 bool ScriptablePluginObject::HasMethod(NPIdentifier name) {
@@ -81,6 +85,10 @@ bool ScriptablePluginObject::Invoke(NPIdentifier name, const NPVariant* args, ui
 			BOOLEAN_TO_NPVARIANT(stick.hasZAxis(), *result);
 		} else if (name == hasRAxis_id) {
 			BOOLEAN_TO_NPVARIANT(stick.hasRAxis(), *result);
+		} else if (name == hasUAxis_id) {
+			BOOLEAN_TO_NPVARIANT(stick.hasUAxis(), *result);
+		} else if (name == hasVAxis_id) {
+			BOOLEAN_TO_NPVARIANT(stick.hasVAxis(), *result);
 		} else if (name == hasPOV_id) {
 			BOOLEAN_TO_NPVARIANT(stick.hasPOV(), *result);
 		} else if (name == getNumButtons_id) {
@@ -122,6 +130,10 @@ bool ScriptablePluginObject::GetProperty(NPIdentifier name, NPVariant* result) {
 		INT32_TO_NPVARIANT(stick.getZ(), *result);
 	} else if (name == propR_id) {
 		INT32_TO_NPVARIANT(stick.getR(), *result);
+	} else if (name == propU_id) {
+		INT32_TO_NPVARIANT(stick.getU(), *result);
+	} else if (name == propV_id) {
+		INT32_TO_NPVARIANT(stick.getV(), *result);
 	} else if (name == propA_id) {
 		BOOLEAN_TO_NPVARIANT(stick.getA(), *result);
 	} else if (name == propB_id) {

@@ -18,6 +18,8 @@ public:
 	void poll();					// when auto-poll is false, reads and stores the button states for the device
 	bool hasZAxis();				// returns true if the device supports a z-axis
 	bool hasRAxis();				// returns true if the device supports a r-axis
+	bool hasUAxis();				// returns true if the device supports a u-axis
+	bool hasVAxis();				// returns true if the device supports a v-axis
 	bool hasPOV();					// returns true if the device supports a hat-switch
 	int getNumButtons();			// returns the number of buttons (as in A, B, X, Y, start, etc.)
 	void setButtonA(int button);	// sets the button index associated with getA()
@@ -36,6 +38,8 @@ public:
 	int getY();			// returns the y-axis (0-65535)
 	int getZ();			// returns the (optional) z-axis (0-65535)
 	int getR();			// returns the (optional) r-axis (0-65535)
+	int getU();			// returns the (optional) u-axis (0-65535)
+	int getV();			// returns the (optional) v-axis (0-65535)
 	bool getA();		// returns true if the buttons assigned to A is pressed (default is button 0)
 	bool getB();		// returns true if the buttons assigned to B is pressed (default is button 1)
 	int getButtons();	// returns the state of all buttons as bitmask

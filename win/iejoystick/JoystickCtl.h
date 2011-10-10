@@ -73,6 +73,8 @@ public:
 	STDMETHOD(poll)();
 	STDMETHOD(hasZAxis)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(hasRAxis)(/*[out, retval]*/ VARIANT_BOOL *pVal);
+	STDMETHOD(hasUAxis)(/*[out, retval]*/ VARIANT_BOOL *pVal);
+	STDMETHOD(hasVAxis)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(hasPOV)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(getNumButtons)(/*[out, retval]*/ UINT *pVal);
 	STDMETHOD(setButtonA)(/*[in]*/ UINT button);
@@ -84,6 +86,8 @@ public:
 	STDMETHOD(get_y)(/*[out, retval]*/ DWORD *pVal);
 	STDMETHOD(get_z)(/*[out, retval]*/ DWORD *pVal);
 	STDMETHOD(get_r)(/*[out, retval]*/ DWORD *pVal);
+	STDMETHOD(get_u)(/*[out, retval]*/ DWORD *pVal);
+	STDMETHOD(get_v)(/*[out, retval]*/ DWORD *pVal);
 	STDMETHOD(get_a)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(get_b)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(get_buttons)(/*[out, retval]*/ DWORD *pVal);
@@ -92,7 +96,7 @@ public:
 	STDMETHOD(get_down)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(get_left)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(get_right)(/*[out, retval]*/ VARIANT_BOOL *pVal);
-
+	
 	HRESULT OnDraw(ATL_DRAWINFO& di);
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
