@@ -62,10 +62,16 @@ function loop() {
 	var x = stick.getX();
 	if (x < 28672 || x > 36864) {
 		sheep.x += (x - 32768) / 2048;
+		if (sheep.x < 0) {
+			sheep.x = 0;
+		}
 	}
 	var y = stick.getY();
 	if (y < 28672 || y > 36864) {
 		sheep.y += (y - 32768) / 2048;
+		if (sheep.y < 0) {
+			sheep.y = 0;
+		}
 	}
 	
 	sheep.draw();
