@@ -9,12 +9,17 @@ The plug-in currently works with Firefox, IE, Opera and Safari on Windows, and S
 ||boolean||`setDevice(int index)`<br>Select the game device the plug-in instance is connected to; returns `true` if a controller is connected.||
 ||int    ||`getDevice()`<br>Returns the index of the game device currently set.||
 ||boolean||`isConnected()`<br>Returns `true` if a controller is connected.||
+||void||`setAutoPoll(boolean autoPoll)`<br>Normally the device state is automatically polled every time a property is read, which may be too slow for the older analogue interface. Setting this to false only polls the device when a `poll()` is issued, and the property values are taken from that time. (It may also allow for better sync in longer game loops.)||
+||void||`poll()`<br>An explicit poll to the game device.||
+||string||`getProductName()`<br>Returns the OEM name of the game device.||
 
 == Properties ==
 ||int    ||x<br>Joystick x-axis.||
 ||int    ||y<br>Joystick y-axis.||
 ||int    ||z<br>Throttle (or z-axis).||
 ||int    ||r<br>Rudder (or r-axis).||
+||int    ||u<br>Joystick u-axis.||
+||int    ||v<br>Joystick v-axis.||
 ||boolean||a<br>`true` if the A button is pressed (the A button can be reassigned to any of the controller's buttons)||
 ||boolean||b<br>`true` if the B button is pressed (the B button can be reassigned to any of the controller's buttons)||
 ||int||buttons<br>An integer representing the state of all the game controller's buttons as individual bits||
