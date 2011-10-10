@@ -4,8 +4,8 @@
 #include "ScriptablePluginObjectBase.h"
 #include "Joystick.h"
 
-#define NUM_METHODS 14
-#define NUM_PROPERTIES 12
+#define NUM_METHODS 16
+#define NUM_PROPERTIES 14
 
 class ScriptablePluginObject : public ScriptablePluginObjectBase
 {
@@ -20,6 +20,8 @@ private:
 	NPIdentifier poll_id;
 	NPIdentifier hasZAxis_id;
 	NPIdentifier hasRAxis_id;
+	NPIdentifier hasUAxis_id;
+	NPIdentifier hasVAxis_id;
 	NPIdentifier hasPOV_id;
 	NPIdentifier getNumButtons_id;
 	NPIdentifier setButtonA_id;
@@ -31,6 +33,8 @@ private:
 	NPIdentifier propY_id;
 	NPIdentifier propZ_id;
 	NPIdentifier propR_id;
+	NPIdentifier propU_id;
+	NPIdentifier propV_id;
 	NPIdentifier propA_id;
 	NPIdentifier propB_id;
 	NPIdentifier propButtons_id;

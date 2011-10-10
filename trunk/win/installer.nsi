@@ -12,13 +12,13 @@
 ;--------------------------------
 
 ; Version number (both the ActiveX and Mozilla plug-in use the same)
-!define VERSION_NUM "0.6.2.1"
+!define VERSION_NUM "0.6.3.1"
 
 ; IE plug-in UUID
 !define ACTIVEX_UUID "3AE9ED90-4B59-47A0-873B-7B71554B3C3E"
 
 ; Name of the installer
-Name "JavaScript Joystick Plug-in"
+Name "Joystick Plug-in"
 
 ; File to write
 OutFile "jsjs-installer.exe"
@@ -51,9 +51,9 @@ RequestExecutionLevel admin
 ; Installer version info
 
 VIProductVersion "${VERSION_NUM}"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "JavaScript Joystick Plug-in"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Joystick Plug-in"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Numfum Ltd"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "©2001-2002, 2009-2010 Numfum Ltd"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "©2001-2002, 2009-2011 Numfum Ltd"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Browser plug-ins to enable JavaScript access to game controllers"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION_NUM}"
 
@@ -74,7 +74,7 @@ Section "Common Files" Common
   
   ; Write the Windows uninstaller keys
   !define JSJS_UNINSTALLER_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\JSJS"
-  WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "DisplayName" "JavaScript Joystick Plug-in"
+  WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "DisplayName" "Joystick Plug-in"
   WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "Publisher" "Numfum Ltd"
   WriteRegStr   HKLM "${JSJS_UNINSTALLER_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegDWORD HKLM "${JSJS_UNINSTALLER_KEY}" "NoModify" 1
@@ -87,10 +87,10 @@ Section "Firefox" Firefox
   !define MOZILLA_PLUGIN_KEY "Software\MozillaPlugins\@numfum.com/JSJS,version=${VERSION_NUM}"
   WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Description" "Allows JavaScript access to joysticks"
   WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Path"        "$INSTDIR\npjoystick.dll"
-  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "ProductName" "JavaScript Joystick Plugin"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "ProductName" "Joystick Plugin"
   WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Vendor"      "Numfum Ltd"
   WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}" "Version"     "${VERSION_NUM}"
-  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}\MimeTypes\application/x-vnd.numfum-joystick" "Description" "JavaScript Joystick Plugin"
+  WriteRegStr HKLM "${MOZILLA_PLUGIN_KEY}\MimeTypes\application/x-vnd.numfum-joystick" "Description" "Joystick Plugin"
   
   ; Then write a copy to the plug-ins folder
   !insertmacro MozillaPluginDir

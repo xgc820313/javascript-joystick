@@ -25,25 +25,29 @@ interface IJoystickCtl : IDispatch {
 	[id(6),  helpstring("method poll")] HRESULT poll();
 	[id(7),  helpstring("method hasZAxis")] HRESULT hasZAxis([out, retval] VARIANT_BOOL *pVal);
 	[id(8),  helpstring("method hasRAxis")] HRESULT hasRAxis([out, retval] VARIANT_BOOL *pVal);
-	[id(9),  helpstring("method hasPOV")] HRESULT hasPOV([out, retval] VARIANT_BOOL *pVal);
-	[id(10), helpstring("method getNumButtons")] HRESULT getNumButtons([out, retval] UINT *pVal);
-	[id(11), helpstring("method setButtonA")] HRESULT setButtonA([in] UINT button);
-	[id(12), helpstring("method setButtonB")] HRESULT setButtonB([in] UINT button);
-	[id(13), helpstring("method calibrate")] HRESULT calibrate();
-	[id(14), helpstring("method getProductName")] HRESULT getProductName([out, retval] BSTR *pName);
+	[id(9),  helpstring("method hasUAxis")] HRESULT hasUAxis([out, retval] VARIANT_BOOL *pVal);
+	[id(10), helpstring("method hasVAxis")] HRESULT hasVAxis([out, retval] VARIANT_BOOL *pVal);
+	[id(11), helpstring("method hasPOV")] HRESULT hasPOV([out, retval] VARIANT_BOOL *pVal);
+	[id(12), helpstring("method getNumButtons")] HRESULT getNumButtons([out, retval] UINT *pVal);
+	[id(13), helpstring("method setButtonA")] HRESULT setButtonA([in] UINT button);
+	[id(14), helpstring("method setButtonB")] HRESULT setButtonB([in] UINT button);
+	[id(15), helpstring("method calibrate")] HRESULT calibrate();
+	[id(16), helpstring("method getProductName")] HRESULT getProductName([out, retval] BSTR *pName);
 	
-	[propget, id(15), helpstring("property x")] HRESULT x([out, retval] DWORD *pVal);
-	[propget, id(16), helpstring("property y")] HRESULT y([out, retval] DWORD *pVal);
-	[propget, id(17), helpstring("z axis property")] HRESULT z([out, retval] DWORD *pVal);
-	[propget, id(18), helpstring("r axis property")] HRESULT r([out, retval] DWORD *pVal);
-	[propget, id(19), helpstring("property a")] HRESULT a([out, retval] VARIANT_BOOL *pVal);
-	[propget, id(20), helpstring("property b")] HRESULT b([out, retval] VARIANT_BOOL *pVal);
-	[propget, id(21), helpstring("property buttons")] HRESULT buttons([out, retval] DWORD *pVal);
-	[propget, id(22), helpstring("property pov")] HRESULT pov([out, retval] DWORD *pVal);
-	[propget, id(23), helpstring("property up")] HRESULT up([out, retval] VARIANT_BOOL *pVal);
-	[propget, id(24), helpstring("property down")] HRESULT down([out, retval] VARIANT_BOOL *pVal);
-	[propget, id(25), helpstring("property left")] HRESULT left([out, retval] VARIANT_BOOL *pVal);
-	[propget, id(26), helpstring("property right")] HRESULT right([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(17), helpstring("property x")] HRESULT x([out, retval] DWORD *pVal);
+	[propget, id(18), helpstring("property y")] HRESULT y([out, retval] DWORD *pVal);
+	[propget, id(19), helpstring("z axis property")] HRESULT z([out, retval] DWORD *pVal);
+	[propget, id(20), helpstring("r axis property")] HRESULT r([out, retval] DWORD *pVal);
+	[propget, id(21), helpstring("u axis property")] HRESULT u([out, retval] DWORD *pVal);
+	[propget, id(22), helpstring("v axis property")] HRESULT v([out, retval] DWORD *pVal);
+	[propget, id(23), helpstring("property a")] HRESULT a([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(24), helpstring("property b")] HRESULT b([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(25), helpstring("property buttons")] HRESULT buttons([out, retval] DWORD *pVal);
+	[propget, id(26), helpstring("property pov")] HRESULT pov([out, retval] DWORD *pVal);
+	[propget, id(27), helpstring("property up")] HRESULT up([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(28), helpstring("property down")] HRESULT down([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(29), helpstring("property left")] HRESULT left([out, retval] VARIANT_BOOL *pVal);
+	[propget, id(30), helpstring("property right")] HRESULT right([out, retval] VARIANT_BOOL *pVal);
 };
 
 [

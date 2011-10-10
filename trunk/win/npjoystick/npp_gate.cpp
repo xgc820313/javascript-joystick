@@ -45,7 +45,7 @@
 char*
 NPP_GetMIMEDescription(void)
 {
-  return "application/x-vnd.numfum-joystick:*:JavaScript Joystick Plugin";
+  return "application/x-vnd.numfum-joystick:*:Joystick Plugin";
 }
 
 
@@ -169,7 +169,7 @@ NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
     *((char **)value) = "NPJoystick";
     break;
   case NPPVpluginDescriptionString:
-    *((char **)value) = "JavaScript Joystick Plugin";
+    *((char **)value) = "Joystick Plugin";
     break;
   case NPPVpluginScriptableNPObject:
     *(NPObject **)value = plugin->GetScriptableObject();

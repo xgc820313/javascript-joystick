@@ -67,6 +67,14 @@ bool Joystick::hasRAxis() {
 	return (joyCaps.wCaps & JOYCAPS_HASR) != 0;
 }
 
+bool Joystick::hasUAxis() {
+	return (joyCaps.wCaps & JOYCAPS_HASU) != 0;
+}
+
+bool Joystick::hasVAxis() {
+	return (joyCaps.wCaps & JOYCAPS_HASV) != 0;
+}
+
 bool Joystick::hasPOV() {
 	return (joyCaps.wCaps & JOYCAPS_HASPOV) != 0;
 }
@@ -139,6 +147,26 @@ int Joystick::getR() {
 	return joyInfoEx.dwRpos;
 }
 
+int Joystick::getU() {
+	if (autoPoll) {
+		joyInfoEx.dwFlags = JOY_RETURNU;
+#ifndef DUMMY_JOYSTICK
+		joyGetPosEx(device, &joyInfoEx);
+#endif
+	}
+	return joyInfoEx.dwUpos;
+}
+
+int Joystick::getV() {
+	if (autoPoll) {
+		joyInfoEx.dwFlags = JOY_RETURNV;
+#ifndef DUMMY_JOYSTICK
+		joyGetPosEx(device, &joyInfoEx);
+#endif
+	}
+	return joyInfoEx.dwVpos;
+}
+
 bool Joystick::getA() {
 	return (getButtons() & buttonA) != 0;
 }
@@ -179,5 +207,4 @@ bool Joystick::getDPad(Direction direction) {
 			return getX() > 36864;
 	}
 	return false;
-
 }
