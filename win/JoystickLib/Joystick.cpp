@@ -42,7 +42,7 @@ bool Joystick::isConnected() {
 
 void Joystick::setAutoPoll(bool enabled) {
 	if (!enabled) {
-		joyInfoEx.dwFlags = JOY_RETURNBUTTONS | JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR | JOY_RETURNPOV;
+		joyInfoEx.dwFlags = JOY_RETURNBUTTONS | JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR | JOY_RETURNU | JOY_RETURNV | JOY_RETURNPOV;
 	}
 	autoPoll = enabled;
 }
