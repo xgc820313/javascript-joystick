@@ -14,15 +14,16 @@ The plug-in currently works with Firefox, IE, Opera and Safari on Windows, and S
 ||string||`getProductName()`<br>Returns the OEM name of the game device.||
 
 == Properties ==
-||int    ||x<br>Joystick x-axis.||
-||int    ||y<br>Joystick y-axis.||
-||int    ||z<br>Throttle (or z-axis).||
-||int    ||r<br>Rudder (or r-axis).||
-||int    ||u<br>Joystick u-axis.||
-||int    ||v<br>Joystick v-axis.||
+||int    ||x<br>Joystick x-axis||
+||int    ||y<br>Joystick y-axis||
+||int    ||z<br>Throttle (or z-axis)||
+||int    ||r<br>Rudder (or r-axis)||
+||int    ||u<br>Joystick u-axis||
+||int    ||v<br>Joystick v-axis||
 ||boolean||a<br>`true` if the A button is pressed (the A button can be reassigned to any of the controller's buttons)||
 ||boolean||b<br>`true` if the B button is pressed (the B button can be reassigned to any of the controller's buttons)||
 ||int||buttons<br>An integer representing the state of all the game controller's buttons as individual bits||
+||int    ||pov<br>Hat-switch, in degrees multiplied by 100||
 
 == Embedding ==
 For IE (or other ActiveX containers) the class ID is `3AE9ED90-4B59-47A0-873B-7B71554B3C3E`. For all other browsers the MIME-type is `application/x-vnd.numfum-joystick`. Sample code to follow.
