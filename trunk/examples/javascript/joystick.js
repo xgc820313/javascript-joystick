@@ -110,6 +110,13 @@ Joystick.createPlugin = function() {
 	if (ctrlIE) {
 		try {
 			ctrlIE.classid = "CLSID:3AE9ED90-4B59-47A0-873B-7B71554B3C3E";
+			/*
+			 * Before accessing the plug-in's script interface it needs to be
+			 * added to the page. If the 'setDevice' call fails, the plug-in
+			 * is assumed to either not be installed or not working in this
+			 * browser, in which case it is removed further down.
+			 */
+			document.body.appendChild(ctrlIE);
 			if (ctrlIE.setDevice(0) != null) {
 				/*
 				 * IE always returns a Boolean for this call, so any non-null
@@ -123,8 +130,12 @@ Joystick.createPlugin = function() {
 			 * so ignore any exceptions and try the next method.
 			 */
 		}
+		/*
+		 * If we've reached here something has gone wrong after adding the
+		 * plug-in to the page, so we remove it.
+		 */
+		document.body.removeChild(ctrlIE);
 	}
-	
 	var ctrlFF = document.createElement("embed");
 	if (ctrlFF) {
 		if (navigator && navigator.plugins) {
@@ -149,12 +160,9 @@ Joystick.createPlugin = function() {
 			ctrlFF.width  = 0;
 			ctrlFF.height = 0;
 			/*
-			 * Before accessing the plug-in's script interface it needs to be
-			 * added to the page. If the 'setDevice' call fails, the plug-in
-			 * is assumed to either not be installed or not working in this
-			 * browser, in which case it is removed in the catch.
+			 * Just like IE, the plug-in needs adding to the page first.
 			 */
-			document.body.appendChild(ctrlFF, document.body);
+			document.body.appendChild(ctrlFF);
 			if (ctrlFF.setDevice(0) != null) {
 				/*
 				 * As with the code for IE, any non-null value is a
@@ -168,12 +176,10 @@ Joystick.createPlugin = function() {
 			 */
 		}
 		/*
-		 * If we've reached here something has gone wrong after adding the
-		 * plug-in to the page, so we remove it.
+		 * As per IE, adding failed so remove it.
 		 */
 		document.body.removeChild(ctrlFF);
 	}
-	
 	return null;
 };
 
