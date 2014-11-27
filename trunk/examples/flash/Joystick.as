@@ -209,10 +209,12 @@ class Joystick {
 	if (ctrlIE) {\
 		try {\
 			ctrlIE.classid = 'CLSID:3AE9ED90-4B59-47A0-873B-7B71554B3C3E';\
+			document.body.appendChild(ctrlIE);\
 			if (ctrlIE.setDevice(0) != null) {\
 				return ctrlIE;\
 			}\
 		} catch (e) {}\
+		document.body.removeChild(ctrlIE);\
 	}\
 	var ctrlFF = document.createElement('embed');\
 	if (ctrlFF) {\
